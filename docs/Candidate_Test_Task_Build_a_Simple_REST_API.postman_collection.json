@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "e1ae5e56-4117-4cec-ac5d-1d140401a4a4",
+		"name": "Candidate Test Task: Build a Simple REST API",
+		"description": "This API allows users to register, log in, and manage posts. The endpoints below describe the request methods, required parameters, and example requests/responses.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29443539",
+		"_collection_link": "https://ssp777.postman.co/workspace/SSP-Workspace~18e9d2a7-b0e8-4bd4-9c12-ac5aa69cf821/collection/29443539-e1ae5e56-4117-4cec-ac5d-1d140401a4a4?action=share&source=collection_link&creator=29443539"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Mabel King\",\r\n  \"email\": \"mabelking@example.com\",\r\n  \"password\": \"password\",\r\n  \"password_confirmation\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "### API Request Description\n\nThis API endpoint allows users to register with the application. The request should be sent via an HTTP POST method to the specified URL. The request body should contain the user's name, email, password, and password confirmation in JSON format.\n\n- Request Body Parameters:\n    \n    - `name` (string): The name of the user.\n        \n    - `email` (string): The email address of the user.\n        \n    - `password` (string): The password chosen by the user.\n        \n    - `password_confirmation` (string): The confirmation of the chosen password.\n        \n\n### API Response\n\nThe API responds with a status code of 201 upon successful registration. The response is in JSON format with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```\n\nThe response contains a message indicating the status of the registration process."
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"description": "### API Request Description\n\nThis endpoint is used to authenticate a user and obtain an access token for subsequent API calls. The request should be sent via an HTTP POST method to the specified URL. The request body should be in raw JSON format and contain the user's email and password for authentication.\n\n#### Request Body\n\n- `email` (string): The email of the user.\n    \n- `password` (string): The password of the user.\n    \n\n### API Response\n\nThe response to this request is in JSON format and includes the following fields:\n\n``` json\n{\n  \"access_token\": \"\",\n  \"token_type\": \"\",\n  \"expires_in\": 0\n}\n\n ```\n\n#### JSON Schema\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"access_token\": {\n      \"type\": \"string\"\n    },\n    \"token_type\": {\n      \"type\": \"string\"\n    },\n    \"expires_in\": {\n      \"type\": \"integer\"\n    }\n  }\n}\n\n ```\n\n###   \n**Error (401):**\n\n```\n\n{\n  \"error\": \"Invalid credentials\"\n}\n\n\n\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Current User Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDEvYXBpL2xvZ2luIiwiaWF0IjoxNzM3MTMzOTkxLCJleHAiOjE3MzcxMzc1OTEsIm5iZiI6MTczNzEzMzk5MSwianRpIjoidTN3NG5BSE5ocWhhNWhFWiIsInN1YiI6IjMyIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.ovYTlDeVsQyAGXq_3glWqjgE-Mq4u2Cv9VrxTKtMH1o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/user",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "### Get User Details\n\nThis endpoint makes an HTTP GET request to retrieve user details.\n\n#### Request  \n  \nHeaders:  \n\n  \nAuthorization: Bearer  \n\n#### Response\n\n- Status: 200 OK\n    \n- Content-Type: application/json\n    \n\n##### Response Body\n\n``` json\n{\n    \"id\": 0,\n    \"name\": \"\",\n    \"email\": \"\",\n    \"email_verified_at\": null,\n    \"created_at\": \"\",\n    \"updated_at\": \"\"\n}\n\n ```\n\nThe response returns the user details including the user ID, name, email, email verification status, creation timestamp, and last update timestamp."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"description": "### GET /api/posts\n\nThis endpoint retrieves a list of posts.\n\n#### Request\n\nNo request body is required for this endpoint.\n\n#### Response\n\nThe response will be a JSON array containing objects with the following properties:\n\n- `id` (number): The unique identifier for the post.\n    \n- `user_id` (number): The unique identifier for the user who created the post.\n    \n- `title` (string): The title of the post.\n    \n- `content` (string): The content of the post.\n    \n- `created_at` (string): The timestamp indicating when the post was created.\n    \n- `updated_at` (string): The timestamp indicating when the post was last updated.\n    \n\nExample response:\n\n``` json\n[\n  {\n    \"id\": 0,\n    \"user_id\": 0,\n    \"title\": \"\",\n    \"content\": \"\",\n    \"created_at\": \"\",\n    \"updated_at\": \"\"\n  }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"description": "## API POST /api/posts\n\nThis endpoint allows the user to create a new post.\n\n### Request Body\n\n- **title** (string, required): The title of the post.\n    \n- **content** (string, required): The content of the post.\n    \n\nExample:\n\n``` json\n{\n  \"title\": \"My First Post\",\n  \"content\": \"Hello my name is John King\"\n}\n\n ```\n\n### Response\n\nThe response will be a JSON object with the following schema:\n\n``` json\n{\n  \"postId\": \"string\",\n  \"message\": \"string\"\n}\n\n ```\n\n- **postId** (string): The ID of the newly created post.\n    \n- **message** (string): A message indicating the status of the post creation."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Post",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"description": "### Update Post\n\nThis endpoint is used to update a specific post by providing the post ID in the URL.\n\n#### Request\n\n- **Headers:  \n    **Authorization: Bearer\n    \n- **Body(JSON):  \n    **{  \n    \"title\": \"Updated Title\",  \n    \"content\": \"Updated content.\"  \n    }  \n    \n\n#### Response\n\n- **Success:**\n    \n\n{  \n\"id\": 1,  \n\"title\": \"Updated Title\",  \n\"content\": \"Updated content.\",  \n\"user_id\": 1,  \n\"created_at\": \"2023-01-01T00:00:00.000Z\",  \n\"updated_at\": \"2023-01-02T00:00:00.000Z\"  \n}."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/posts/21",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"posts",
+						"21"
+					]
+				},
+				"description": "### Delete Post\n\nDeletes a post. Only the owner can delete the post.\n\n#### Request\n\n**Headers:  \n**Authorization: Bearer  \n  \n\n#### Response\n\n  \n**Success(200):  \n**{  \n\"message\": \"Post deleted successfully\"  \n}\n\n**Error(403):  \n**{  \n\"error\": \"You do not have permission to delete this post\"  \n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Post",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
